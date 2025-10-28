@@ -1,0 +1,154 @@
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden; /* Evita scroll si el contenido es demasiado alto en alguna columna */
+}
+
+.auth-layout-container {
+  display: flex; /* Para las dos columnas */
+  min-height: 100vh; /* Ocupa toda la altura de la ventana */
+  color: #333;
+}
+
+.auth-layout-left {
+  flex: 1; /* Ocupa la mitad del ancho */
+  background-color: #f8fcfd; /* Un fondo muy claro */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 4rem; /* Más padding horizontal */
+  text-align: center;
+  position: relative;
+  overflow: hidden; 
+  box-sizing: border-box; /* Incluye padding en el ancho */
+}
+
+/* Detalles de diseño (simulando los círculos de la imagen de Cisco) */
+.auth-layout-left::before,
+.auth-layout-left::after {
+  content: '';
+  position: absolute;
+  background-color: rgba(220, 240, 255, 0.6); 
+  border-radius: 50%;
+  z-index: 0;
+}
+.auth-layout-left::before {
+  width: 250px;
+  height: 250px;
+  top: -80px;
+  left: -80px;
+  opacity: 0.8;
+}
+.auth-layout-left::after {
+  width: 180px;
+  height: 180px;
+  bottom: -60px;
+  right: -60px;
+  opacity: 0.5;
+  background-color: rgba(200, 230, 255, 0.4);
+}
+
+.auth-layout-left h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  z-index: 1;
+  position: relative; /* Para que esté sobre los pseudo-elementos */
+}
+
+.auth-layout-left p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 500px;
+  color: #555;
+  z-index: 1;
+  position: relative;
+}
+
+.auth-branding-logo { /* Si decides poner una imagen */
+  max-width: 60%;
+  height: auto;
+  margin-bottom: 2rem;
+  z-index: 1;
+  position: relative;
+}
+
+.auth-layout-right {
+  flex: 1; /* Ocupa la otra mitad */
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente el contenido del formulario */
+  justify-content: center; /* Centra verticalmente el contenido del formulario */
+  padding: 2rem;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10; /* Asegura que esté por encima de cualquier cosa del lado izquierdo si hay superposición */
+}
+
+/* Responsive: Una columna en pantallas pequeñas */
+@media (max-width: 768px) {
+  .auth-layout-container {
+    flex-direction: column;
+  }
+  .auth-layout-left {
+    min-height: 250px; /* Un poco de altura para el texto en móvil */
+    padding: 2rem;
+  }
+  .auth-layout-left h2 {
+    font-size: 1.8rem;
+  }
+  .auth-layout-left p {
+    font-size: 0.9rem;
+  }
+  .auth-layout-right {
+    min-height: 75vh; /* La mayor parte de la pantalla para el formulario */
+    padding: 1rem;
+  }
+}
+
+/* Estilo para el botón "Volver" (simulando el diseño de la imagen) */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none; /* Si se usa como <Link> */
+}
+
+.back-button:hover {
+  color: #007bff;
+}
+
+.back-button-icon {
+  transform: rotate(90deg); /* Flecha hacia arriba */
+  font-size: 1.2rem;
+}
+/* Estilos para el texto de "Español" en la esquina */
+.language-selector {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #666;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-selector span {
+  font-weight: bold;
+}
+
+/*.language-selector-icon {
+  /* Puedes usar un icono de globo aquí si tienes una librería de iconos */
