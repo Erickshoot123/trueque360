@@ -11,11 +11,15 @@ function Login() {
     event.preventDefault(); 
     console.log('Enviando datos:', { username, password });
     alert(`Iniciando sesión como: ${username}`);
-   
+    
+    // --- ¡CAMBIO AÑADIDO AQUÍ! ---
+    // Esto te redirigirá a la página /dashboard después del alert.
+    navigate('/dashboard'); 
+    // ---------------------------
   };
 
   return (
-   
+    
     <> 
   
 
@@ -26,7 +30,7 @@ function Login() {
         <div className="form-group">
           <label htmlFor="username">Nombre de usuario :</label> 
           <input
-            type="email" 
+            type="text" 
             id="username" 
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -61,7 +65,7 @@ function Login() {
       
       <div className="register-prompt">
         <p>
-          ¿No tiene cuenta? <Link to="/registro">Inscribase</Link> 
+          ¿No tiene cuenta? <Link to="/registro">Crear una</Link> 
         </p>
       </div>
     </>
