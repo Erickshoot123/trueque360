@@ -38,23 +38,7 @@
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
-/*
-.forgot-password-link {
-  text-align: center;
-  margin-top: -0.5rem;
-  margin-bottom: 1.5rem;
-}
 
-.forgot-password-link a {
-  color: #007bff;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.forgot-password-link a:hover {
-  text-decoration: underline;
-}
-*/
 .login-button {
   padding: 0.9rem 1.5rem;
   border: none;

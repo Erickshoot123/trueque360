@@ -1,28 +1,21 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // <-- Importamos Link y useNavigate
-import './Login.css'; // Usaremos el CSS existente o lo ajustaremos
+import { Link, useNavigate } from 'react-router-dom';
+import './login.css'; // Asumiendo que tu css se llama 'login.css' en minúscula
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Hook para la navegación programática
+  const navigate = useNavigate(); 
 
   const handleSubmit = (event) => {
     event.preventDefault(); 
     console.log('Enviando datos:', { username, password });
     alert(`Iniciando sesión como: ${username}`);
-    
-    // --- ¡CAMBIO AÑADIDO AQUÍ! ---
-    // Esto te redirigirá a la página /dashboard después del alert.
     navigate('/dashboard'); 
-    // ---------------------------
   };
 
   return (
-    
     <> 
-  
-
       <h2>¡Le damos la bienvenida!</h2>
       <p className="login-intro-text">Inicie sesión en su cuenta</p>
       
@@ -30,7 +23,8 @@ function Login() {
         <div className="form-group">
           <label htmlFor="username">Nombre de usuario :</label> 
           <input
-            type="text" 
+            /* --- ¡AQUÍ ESTÁ LA CORRECCIÓN! --- */
+            type="text" /* Debe ser "text" o "email", no "username" */
             id="username" 
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -50,17 +44,10 @@ function Login() {
             placeholder=" Contraseña"
           />
         </div>
-{/*
-        <div className="forgot-password-link">
-          <Link to="/restablecer-contrasena">Configurar o restablecer la contraseña</Link>
-        </div>
-*/ }
-        
         
         <button type="submit" className="login-button">
           Iniciar sesión
         </button>
-        
       </form>
       
       <div className="register-prompt">

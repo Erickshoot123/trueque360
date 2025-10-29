@@ -1,9 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AuthLayout from './AuthLayout'; 
-import Login from './login';
-import Register from './Register';
-import Dashboard from './Dashboard';
+
+/*
+ * --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
+ * Las rutas de importación DEBEN apuntar a la carpeta /components/
+*/
+import AuthLayout from './components/AuthLayout/AuthLayout';
+import Login from './components/Login/login'; // Pongo 'login' en minúscula porque así está tu archivo
+import Register from './components/Register/Register';
+import Dashboard from './components/Dashboard/Dashboard';
+
+// import './App.css'; 
 
 function App() {
   return (
@@ -35,17 +42,11 @@ function App() {
               </AuthLayout>
             } 
           />
-
-          {/* --- Rutas de la Aplicación (Protegidas) ---
-            NO usan el AuthLayout. Es una página completa.
-          */}
           <Route 
             path="/dashboard" 
             element={<Dashboard />} 
           />
           
-          {/* Aquí podrías agregar más rutas como /perfil, /configuracion, etc. */}
-
         </Routes>
       </div>
     </Router>
