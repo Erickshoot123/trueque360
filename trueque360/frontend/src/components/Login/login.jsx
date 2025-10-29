@@ -1,19 +1,63 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './login.css'; // Asumiendo que tu css se llama 'login.css' en minúscula
+import './login.css'; // Tu CSS compartido
 
 function Login() {
+  // --- Estados (Tu código ya los tenía) ---
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
+  // --- ¡NUEVO ESTADO! ---
+  // Para mostrar mensajes de error (ej: "Credenciales incorrectas") o éxito
+  const [message, setMessage] = useState('');
+
   const navigate = useNavigate(); 
 
-  const handleSubmit = (event) => {
+  // --- ¡FUNCIÓN handleSubmit ACTUALIZADA! ---
+  // Reemplazamos el 'alert' por la lógica real de 'fetch'
+  const handleSubmit = async (event) => {
     event.preventDefault(); 
-    console.log('Enviando datos:', { username, password });
-    alert(`Iniciando sesión como: ${username}`);
-    navigate('/dashboard'); 
+    setMessage(''); // Limpiamos mensajes anteriores
+
+    try {
+      // 1. Llamamos a tu API de backend
+      const response = await fetch('http://localhost:3000/api/login', { // Revisa que sea el puerto de tu backend
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+
+      // 2. Obtenemos la respuesta
+      const data = await response.json();
+
+      // 3. Manejamos la respuesta
+      if (!response.ok || data.success === false) {
+        // Si el backend dice "Credenciales incorrectas" (error 401)
+        throw new Error(data.message || 'Credenciales incorrectas');
+      }
+
+      // 4. ¡ÉXITO!
+      setMessage('¡Inicio de sesión exitoso! Redirigiendo...');
+      
+      // (En un futuro, aquí guardas el token JWT: localStorage.setItem('token', data.token);)
+      
+      // Redirigimos al dashboard
+      setTimeout(() => {
+        navigate('/dashboard'); // O a la ruta que quieras
+      }, 1500);
+
+    } catch (error) {
+      // 5. Si hay un error (de red o del 'throw Error'), lo mostramos
+      setMessage(error.message);
+    }
   };
 
+  // --- Tu JSX (SIN CAMBIOS, solo se agrega el mensaje) ---
   return (
     <> 
       <h2>¡Le damos la bienvenida!</h2>
@@ -23,8 +67,7 @@ function Login() {
         <div className="form-group">
           <label htmlFor="username">Nombre de usuario :</label> 
           <input
-            /* --- ¡AQUÍ ESTÁ LA CORRECCIÓN! --- */
-            type="text" /* Debe ser "text" o "email", no "username" */
+            type="text"
             id="username" 
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -48,6 +91,10 @@ function Login() {
         <button type="submit" className="login-button">
           Iniciar sesión
         </button>
+
+        {/* --- ¡NUEVO! --- Mostramos el mensaje de error o éxito aquí */}
+        {message && <p className="form-message">{message}</p>}
+
       </form>
       
       <div className="register-prompt">
