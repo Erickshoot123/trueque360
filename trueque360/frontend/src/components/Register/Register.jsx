@@ -1,28 +1,20 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../login/login.css'; // Usando el mismo CSS (¡RUTA CORREGIDA!)
+import '../login/login.css'; // Usando el mismo CSS
 
 function Register() {
-  // --- Estados (Tu código ya los tenía) ---
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  // --- ¡NUEVO ESTADO! ---
-  // Para mostrar mensajes de error (ej: "Usuario ya existe") o éxito
   const [message, setMessage] = useState('');
-
   const navigate = useNavigate();
 
-  // --- ¡FUNCIÓN handleSubmit ACTUALIZADA! ---
-  // Reemplazamos el 'alert' por la lógica real de 'fetch'
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setMessage(''); // Limpiamos mensajes anteriores
+    setMessage(''); 
 
     try {
-      // 1. Llamamos a tu API de registro
-      const response = await fetch('http://localhost:3000/api/register', { // Revisa el puerto
+      const response = await fetch('http://localhost:3000/api/register', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,30 +26,31 @@ function Register() {
         }),
       });
 
-      // 2. Obtenemos la respuesta
       const data = await response.json();
 
-      // 3. Manejamos la respuesta
       if (!response.ok) {
-        // Si el backend dice "El email o nombre de usuario ya está en uso" (error 400)
         throw new Error(data.message || 'Error al registrarse');
       }
 
       // 4. ¡ÉXITO!
-      setMessage('¡Usuario registrado con éxito! Redirigiendo al login...');
+      setMessage('¡Usuario registrado con éxito! Iniciando sesión...');
 
-      // Redirigimos al login después de 2 segundos
+      // --- ¡NUEVO! Guardamos el Token (Auto-login) ---
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.userId);
+      // ----------------------------------------------
+
+      // Redirigimos al dashboard, ¡no al login!
       setTimeout(() => {
-        navigate('/login');
+        navigate('/dashboard'); 
       }, 2000);
 
     } catch (error) {
-      // 5. Si hay un error, lo mostramos
       setMessage(error.message);
     }
   };
 
-  // --- Tu JSX (SIN CAMBIOS, solo se agrega el mensaje) ---
+  // --- Tu JSX (Exactamente como estaba) ---
   return (
     <>
       <Link to="/login" className="back-button">
@@ -106,9 +99,7 @@ function Register() {
           Registrarse
         </button>
 
-        {/* --- ¡NUEVO! --- Mostramos el mensaje de error o éxito aquí */}
         {message && <p className="form-message">{message}</p>}
-
       </form>
       <div className="register-prompt"> 
         <p>
