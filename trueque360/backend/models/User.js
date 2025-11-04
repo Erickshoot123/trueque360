@@ -22,7 +22,16 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
+  },
+
+
+  role: {
+    type: String,
+    enum: ['user', 'admin'], // Solo permite estos dos valores
+    default: 'user', // El valor por defecto para nuevos registros
+    required: true
   }
+
 
 }, {
   timestamps: true 
