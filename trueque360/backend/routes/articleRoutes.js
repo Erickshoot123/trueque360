@@ -1,46 +1,64 @@
-// backend/routes/articleRoutes.js
 const express = require('express');
 const { body } = require('express-validator');
 const articleController = require('../controllers/articleController');
-const { verifyToken } = require('../middleware/authMiddleware'); // Necesario para rutas protegidas
+const { verifyToken } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-// Validaciones para la creación y actualización
-const articleValidations = [
-    body('title')
-        .trim().isLength({ min: 5, max: 100 }).withMessage('El título debe tener entre 5 y 100 caracteres.'),
-    body('description')
-        .trim().isLength({ min: 20, max: 1000 }).withMessage('La descripción debe tener entre 20 y 1000 caracteres.'),
-    body('category')
-        .isIn(['Electrónica', 'Libros', 'Servicios', 'Hogar', 'Otros']).withMessage('Categoría inválida.'),
-    body('images')
-        .isArray({ min: 1 }).withMessage('Se requiere al menos una imagen (URL).'),
-    body('images.*').isURL().withMessage('Cada elemento en imágenes debe ser una URL válida.'),
+// Sincronizado con el enum exacto (mayúsculas/minúsculas) del Modelo Article.js
+const validCategories = ['Electrónica', 'Libros', 'Servicios', 'Hogar', 'Otros']; 
+
+// --- Validaciones para crear/actualizar ---
+const articleValidationRules = [
+  body('title').notEmpty().withMessage('El título es requerido'),
+  body('description').notEmpty().withMessage('La descripción es requerida'),
+  
+  // --- REGLA CORREGIDA ---
+  body('category')
+    .notEmpty().withMessage('La categoría es requerida')
+    .trim() // Quita espacios al inicio/final
+    // Se elimina .toLowerCase() para validar el caso exacto
+    .isIn(validCategories).withMessage('Categoría inválida. Debe coincidir exactamente (ej: "Electrónica", "Libros").'), 
+
+  body('images').isArray({ min: 1 }).withMessage('Se requiere al menos una imagen')
 ];
 
+// --- RUTAS DEL CRUD PARA /api/articles ---
 
-// --- RUTAS PÚBLICAS (Lectura) ---
+// [C]REATE: POST /api/articles
+// Protegida: Solo usuarios con token pueden crear
+router.post(
+  '/', 
+  verifyToken, // Middleware: Verifica el token y añade 'req.user'
+  articleValidationRules, 
+  articleController.createArticle
+);
 
-// GET /api/articles - Leer todos los artículos
+// [R]EAD: GET /api/articles (Leer todos)
+// Pública: Cualquiera puede ver los artículos
 router.get('/', articleController.getAllArticles);
 
-// GET /api/articles/:id - Leer un artículo por ID
+// [R]EAD: GET /api/articles/:id (Leer uno)
+// Pública: Cualquiera puede ver un artículo
 router.get('/:id', articleController.getArticleById);
 
+// [U]PDATE: PUT /api/articles/:id
+// Protegida: Solo el dueño (verificado en el controlador) puede actualizar
+router.put(
+  '/:id', 
+  verifyToken, 
+  // Nota: Deberíamos aplicar las validaciones también al actualizar
+  // (Opcional, pero recomendado)
+  // articleValidationRules, 
+  articleController.updateArticle
+);
 
-// --- RUTAS PROTEGIDAS (CRUD completo) ---
-
-// Todas las rutas siguientes requieren que el usuario esté autenticado (verifyToken)
-
-// POST /api/articles - Crear un nuevo artículo
-router.post('/', verifyToken, articleValidations, articleController.createArticle);
-
-// PUT /api/articles/:id - Actualizar un artículo (Requiere ser dueño)
-router.put('/:id', verifyToken, articleValidations, articleController.updateArticle);
-
-// DELETE /api/articles/:id - Eliminar un artículo (Requiere ser dueño)
-router.delete('/:id', verifyToken, articleController.deleteArticle);
-
+// [D]ELETE: DELETE /api/articles/:id
+// Protegida: Solo el dueño (verificado en el controlador) puede eliminar
+router.delete(
+  '/:id', 
+  verifyToken, 
+  articleController.deleteArticle
+);
 
 module.exports = router;

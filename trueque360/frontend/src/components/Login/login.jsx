@@ -10,7 +10,7 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); 
-    setMessage('');
+    setMessage(''); 
 
     try {
       const response = await fetch('http://localhost:3000/api/login', { 
@@ -30,16 +30,15 @@ function Login() {
         throw new Error(data.message || 'Credenciales incorrectas');
       }
 
-      // 4. ¡ÉXITO!
+      // Usamos sessionStorage (temporal) en lugar de localStorage (permanente)
+      sessionStorage.setItem('token', data.token);
+      sessionStorage.setItem('userId', data.userId);
+      // ---------------------------------
+
       setMessage('¡Inicio de sesión exitoso! Redirigiendo...');
       
-      // --- ¡NUEVO! Guardamos el Token y el ID del usuario ---
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('userId', data.userId);
-      // --------------------------------------------------
-      
       setTimeout(() => {
-        navigate('/dashboard'); 
+        navigate('/dashboard'); // O a la ruta que quieras
       }, 1500);
 
     } catch (error) {
@@ -47,7 +46,6 @@ function Login() {
     }
   };
 
-  // --- Tu JSX (Exactamente como estaba) ---
   return (
     <> 
       <h2>¡Le damos la bienvenida!</h2>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../login/login.css'; // Usando el mismo CSS
+import '../Login/login.css'; // Usando el mismo CSS
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -32,17 +32,16 @@ function Register() {
         throw new Error(data.message || 'Error al registrarse');
       }
 
-      // 4. ¡ÉXITO!
-      setMessage('¡Usuario registrado con éxito! Iniciando sesión...');
+      // --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
+      // Usamos sessionStorage para el "auto-login"
+      sessionStorage.setItem('token', data.token);
+      sessionStorage.setItem('userId', data.userId);
+      // ---------------------------------
 
-      // --- ¡NUEVO! Guardamos el Token (Auto-login) ---
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('userId', data.userId);
-      // ----------------------------------------------
+      setMessage('¡Usuario registrado con éxito! Redirigiendo...');
 
-      // Redirigimos al dashboard, ¡no al login!
       setTimeout(() => {
-        navigate('/dashboard'); 
+        navigate('/dashboard'); // Lo mandamos directo al dashboard
       }, 2000);
 
     } catch (error) {
@@ -100,6 +99,7 @@ function Register() {
         </button>
 
         {message && <p className="form-message">{message}</p>}
+
       </form>
       <div className="register-prompt"> 
         <p>

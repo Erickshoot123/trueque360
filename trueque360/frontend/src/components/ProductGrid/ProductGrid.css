@@ -1,0 +1,135 @@
+/* Contenedor principal de la cuadrícula */
+.product-grid-container {
+  width: 100%;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.product-grid-container h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* La cuadrícula responsive */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+/* --- ESTILOS DE LA TARJETA (CARD) --- */
+
+/* El Link que envuelve la tarjeta */
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Asegura que el link ocupe todo el espacio de la tarjeta */
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* height: 100%; <-- Eliminado para que la altura sea natural */
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Contenedor de la imagen (para aspect ratio) */
+.card-image-container {
+  width: 100%;
+  padding-top: 66.66%; /* Aspect ratio 3:2 (para 300x200) */
+  position: relative;
+  background-color: #f4f4f4;
+}
+
+.card-image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen cubra el espacio */
+}
+
+/* Contenido de texto de la tarjeta */
+.card-content {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.4rem; /* Asegura espacio para 2 líneas */
+    color:  #007bff;
+
+}
+
+.card-preferred {
+  font-size: 0.9rem;
+  color:  #007bff;
+  /* flex-grow: 1; <-- Eliminado para que no se estire */
+  margin-bottom: 0.5rem;
+  /* Limita el texto a 2 líneas */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-owner {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: auto; /* Empuja esto al fondo del 'card-content' */
+  padding-top: 0.5rem;
+}
+
+/* Estados de Carga y Error */
+.product-grid-loading,
+.product-grid-error {
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+}
+
+/* --- Media Queries para hacerlo Responsive --- */
+
+/* Tablets (ej. iPads) */
+@media (min-width: 600px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktops Pequeños */
+@media (min-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktops Grandes */
+@media (min-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

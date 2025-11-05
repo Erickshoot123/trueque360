@@ -16,17 +16,12 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-<<<<<<< HEAD
     "express-rate-limit": "^8.2.1",
     "express-validator": "^7.3.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.2",
     "morgan": "^1.10.1",
-    "winston": "^3.18.3"
-=======
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.2",
+    "winston": "^3.18.3",
     "socket.io": "^4.8.1"
->>>>>>> 5e95c571d79d8cfe1ac5f5c6f2c954830e534ff5
   }
 }

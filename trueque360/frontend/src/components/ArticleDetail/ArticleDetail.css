@@ -1,0 +1,141 @@
+/* Fondo con gradiente azul para toda la página */
+body {
+  background: linear-gradient(135deg, #b2d1f3 0%, #5a8cc2 50%, #235c99 100%);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-attachment: fixed; /* Para que el gradiente cubra toda la pantalla */
+}
+
+.article-detail-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3); /* Sombra blanca más suave */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.article-content-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4); /* Sombra blanca */
+  border-radius: 10px;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05); /* Fondo blanco muy sutil para destacar el shadow */
+}
+
+/* El resto de tus estilos permanecen igual */
+.article-image-section {
+  flex: 1 1 50%;
+}
+.article-image-section img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+
+.article-info-section {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-category {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: #f0f0f0;
+  color: #555;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+}
+
+.article-info-section h1 {
+  font-size: 2.25rem;
+  margin: 0.5rem 0;
+}
+
+.info-owner {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.article-info-section h3 {
+  font-size: 1.2rem;
+  border-bottom: 2px solid #f4f4f4;
+  padding-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
+.preferred-items-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.preferred-items-list li {
+  padding: 0.4rem 0.8rem;
+  background-color: #e6f7ff;
+  color: #0056b3;
+  border: 1px solid #b3e0ff;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 2rem;
+  align-self: flex-start;
+  transition: background-color 0.2s;
+}
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Estados de carga y error */
+.detail-loading, .detail-error {
+  text-align: center;
+  padding: 2rem;
+  color: white;
+  font-size: 1.2rem;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .article-content-wrapper {
+    flex-direction: column;
+  }
+  
+  body {
+    padding: 1rem;
+  }
+}

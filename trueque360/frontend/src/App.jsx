@@ -1,16 +1,29 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// 1. IMPORTAMOS TODO de react-router-dom
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 
-/*
- * --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
- * Las rutas de importación DEBEN apuntar a la carpeta /components/
-*/
+// --- Importación de Layouts y Páginas ---
 import AuthLayout from './components/AuthLayout/AuthLayout';
-import Login from './components/Login/login'; // Pongo 'login' en minúscula porque así está tu archivo
+import Login from './components/Login/login'; 
 import Register from './components/Register/Register';
 import Dashboard from './components/Dashboard/Dashboard';
+import CreateArticle from './components/CreateArticle/CreateArticle';
 
-// import './App.css'; 
+// --- 2. IMPORTAMOS LA NUEVA PÁGINA DE DETALLES Y SU CSS ---
+import ArticleDetail from './components/ArticleDetail/ArticleDetail';
+import './components/ArticleDetail/ArticleDetail.css';
+
+// --- Importamos el CSS del formulario (que faltaba) ---
+import './components/CreateArticle/CreateArticle.css';
+
+// --- 3. DEFINIMOS EL 'PRIVATE ROUTE' ---
+// Este componente revisa si el usuario tiene un token
+// (Usamos sessionStorage como acordamos)
+const PrivateRoute = ({ children }) => {
+  const token = sessionStorage.getItem('token');
+  // Si hay token, muestra el componente (children). Si no, redirige a /login.
+  return token ? children : <Navigate to="/login" replace />;
+};
 
 function App() {
   return (
@@ -18,6 +31,7 @@ function App() {
       <div className="App">
         <Routes>
           
+          {/* --- Rutas Públicas (Login / Registro) --- */}
           <Route 
             path="/" 
             element={
@@ -42,9 +56,44 @@ function App() {
               </AuthLayout>
             } 
           />
+          
+          {/* --- Rutas Privadas (Protegidas) --- */}
           <Route 
             path="/dashboard" 
-            element={<Dashboard />} 
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/publicar" 
+            element={
+              <PrivateRoute>
+                <CreateArticle />
+              </PrivateRoute>
+            } 
+          />
+          
+          {/* --- 4. AÑADIMOS LA RUTA QUE FALTABA --- */}
+          {/* Esta ruta es pública (para que cualquiera vea artículos) */}
+          {/* pero si quieres que sea privada, envuélvela en <PrivateRoute> */}
+          <Route 
+            path="/articulo/:id" 
+            element={<ArticleDetail />} 
+          />
+          
+          {/* --- Ruta 404 (Wildcard) --- */}
+          {/* Si no encuentra ninguna ruta, muestra esto */}
+          <Route 
+            path="*"
+            element={
+              <div style={{ padding: '2rem', textAlign: 'center' }}>
+                <h2>Error 404 - Página no encontrada</h2>
+                <p>La página que buscas no existe.</p>
+                <Link to="/dashboard">Volver al inicio</Link>
+              </div>
+            }
           />
           
         </Routes>
