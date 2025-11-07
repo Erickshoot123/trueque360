@@ -139,3 +139,23 @@ body {
     padding: 1rem;
   }
 }
+
+
+/* --- ¡ESTILO DEL BOTÓN DE BORRAR! --- */
+.delete-button {
+    margin-top: auto; /* Empuja el botón al final de la columna */
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #dc3545; /* Rojo peligro */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* Rojo más oscuro */
+    transform: translateY(-2px);
+}
