@@ -6,14 +6,16 @@ function AuthLayout({ children }) {
     <div className="auth-layout-container">
       <div className="auth-layout-left">
       
-        <h2>TRUEQUE360</h2>
+        <h2>✨ TRUEQUE360</h2>
         <p>
-          Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+         Intercambia, renueva, evoluciona.
+        Tu próximo gran hallazgo te espera.
         </p>
         <p>
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        En Trueque360, creemos en el poder de la comunidad y la sostenibilidad. Ofrece esos artículos que ya no tienen lugar en tu vida 
+        y descubre las oportunidades que otros tienen para ti. 
+        Olvídate de las transacciones tradicionales y únete a un ciclo de consumo más consciente y humano.
+        Registrate en un minuto y comienza a intercambiar hoy mismo.
         </p>
         
       </div>
@@ -26,3 +28,7 @@ function AuthLayout({ children }) {
 }
 
 export default AuthLayout;
+
+
+
+
