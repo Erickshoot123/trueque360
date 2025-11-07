@@ -1,4 +1,3 @@
-// backend/controllers/articleController.js
 const Article = require('../models/Article');
 const { validationResult } = require('express-validator');
 
@@ -10,7 +9,6 @@ exports.createArticle = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Error de validación', errors: errors.array().map(err => err.msg) });
         }
 
-        // El ID del dueño viene del token JWT verificado en el middleware (req.user.id)
         const owner = req.user.id; 
         const { title, description, category, images, preferredItems } = req.body;
 
@@ -40,9 +38,11 @@ exports.createArticle = async (req, res) => {
 // 2. LEER TODOS los Artículos (R de CRUD)
 exports.getAllArticles = async (req, res) => {
     try {
-        // Obtenemos todos los artículos y populamos el campo 'owner' para mostrar el nombre
-        const articles = await Article.find({})
-            .populate('owner', 'username email'); // Solo trae el username y email del dueño
+        // Filtramos para no mostrar artículos con status 'Eliminado'
+        const articles = await Article.find({ status: { $ne: 'Eliminado' } })
+            // --- ¡CORRECCIÓN IMPORTANTE! ---
+            // Le pedimos que también incluya el _id del dueño
+            .populate('owner', 'username _id'); 
 
         res.status(200).json({ success: true, articles });
     } catch (error) {
@@ -54,17 +54,18 @@ exports.getAllArticles = async (req, res) => {
 // 3. LEER UN Artículo por ID (R de CRUD)
 exports.getArticleById = async (req, res) => {
     try {
+        // --- ¡CORRECCIÓN IMPORTANTE! ---
+        // También lo cambiamos aquí para que funcione en la página de detalles
         const article = await Article.findById(req.params.id)
-            .populate('owner', 'username email');
+            .populate('owner', 'username _id');
 
-        if (!article) {
+        if (!article || article.status === 'Eliminado') { // Ocultamos si está eliminado
             return res.status(404).json({ success: false, message: 'Artículo no encontrado' });
         }
 
         res.status(200).json({ success: true, article });
     } catch (error) {
         console.error('Error al obtener artículo por ID:', error);
-        // Si el ID no tiene el formato correcto de MongoDB, mongoose lanza un error de CastError
         if (error.name === 'CastError') {
             return res.status(400).json({ success: false, message: 'ID de artículo inválido' });
         }
@@ -78,19 +79,20 @@ exports.updateArticle = async (req, res) => {
         const articleId = req.params.id;
         const updates = req.body;
         
-        // 1. Encontrar el artículo
         const article = await Article.findById(articleId);
-        if (!article) {
+        if (!article || article.status === 'Eliminado') {
             return res.status(404).json({ success: false, message: 'Artículo no encontrado' });
         }
 
-        // 2. Verificar si el usuario es el dueño (Seguridad)
-        // req.user.id es un ObjectId, article.owner es un ObjectId. Usamos equals() para comparar.
         if (!article.owner.equals(req.user.id)) {
             return res.status(403).json({ success: false, message: 'No tienes permiso para actualizar este artículo.' });
         }
 
-        // 3. Aplicar y guardar los cambios
+        // Prohibir cambiar el status si se intenta por aquí
+        if (updates.status) {
+            delete updates.status;
+        }
+
         Object.assign(article, updates);
         await article.save();
 
@@ -109,24 +111,24 @@ exports.updateArticle = async (req, res) => {
     }
 };
 
-// 5. ELIMINAR Artículo (D de CRUD)
+// 5. ELIMINAR Artículo (D de CRUD) - Borrado Lógico
 exports.deleteArticle = async (req, res) => {
     try {
         const articleId = req.params.id;
         
-        // 1. Encontrar el artículo
         const article = await Article.findById(articleId);
-        if (!article) {
-            return res.status(404).json({ success: false, message: 'Artículo no encontrado' });
+        if (!article || article.status === 'Eliminado') {
+            return res.status(404).json({ success: false, message: 'Artículo no encontrado' }); 
         }
 
-        // 2. Verificar si el usuario es el dueño (Seguridad)
         if (!article.owner.equals(req.user.id)) {
             return res.status(403).json({ success: false, message: 'No tienes permiso para eliminar este artículo.' });
         }
         
-        // 3. Eliminar
-        await Article.deleteOne({ _id: articleId });
+        // --- ¡CAMBIO AQUÍ! ---
+        // En lugar de deleteOne, actualizamos el status a 'Eliminado'
+        article.status = 'Eliminado';
+        await article.save();
 
         res.status(200).json({ success: true, message: 'Artículo eliminado con éxito' });
         

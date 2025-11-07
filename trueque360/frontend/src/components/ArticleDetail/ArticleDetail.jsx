@@ -85,6 +85,15 @@ function ArticleDetail() {
     return <div className="detail-error">Artículo no encontrado.</div>;
   }
 
+  // --- ¡AQUÍ ESTÁ LA DEPURACIÓN! ---
+  // Si llegamos a este punto, 'article' ya no es null.
+  console.log("--- DEBUG DEL BOTÓN ---");
+  console.log("ID del usuario logueado (currentUserId):", currentUserId);
+  console.log("ID del dueño del artículo (article.owner._id):", article ? article.owner._id : "Artículo no cargado");
+  console.log("¿Son iguales? (isOwner):", isOwner);
+  console.log("------------------------");
+  // ---------------------------------
+
   // ¡Datos cargados! Mostramos la página
   return (
     <div className="article-detail-container">

@@ -39,7 +39,9 @@ const articleSchema = new Schema({
         type: String,
         required: true,
         default: 'Disponible',
-        enum: ['Disponible', 'En trueque', 'Cerrado'],
+        // --- ¡CAMBIO AQUÍ! ---
+        // Añadimos 'Eliminado' para el borrado lógico
+        enum: ['Disponible', 'En trueque', 'Cerrado', 'Eliminado'],
     },
 
     preferredItems: {

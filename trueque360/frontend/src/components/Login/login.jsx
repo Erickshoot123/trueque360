@@ -10,7 +10,7 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); 
-    setMessage(''); 
+    setMessage('');
 
     try {
       const response = await fetch('http://localhost:3000/api/login', { 
@@ -30,15 +30,17 @@ function Login() {
         throw new Error(data.message || 'Credenciales incorrectas');
       }
 
-      // Usamos sessionStorage (temporal) en lugar de localStorage (permanente)
-      sessionStorage.setItem('token', data.token);
-      sessionStorage.setItem('userId', data.userId);
-      // ---------------------------------
-
+      // 4. ¡ÉXITO!
       setMessage('¡Inicio de sesión exitoso! Redirigiendo...');
       
+      // --- ¡ESTA ES LA CORRECCIÓN! ---
+      // Guardamos en sessionStorage
+      sessionStorage.setItem('token', data.token);
+      sessionStorage.setItem('userId', data.userId);
+      // -------------------------------
+      
       setTimeout(() => {
-        navigate('/dashboard'); // O a la ruta que quieras
+        navigate('/dashboard'); 
       }, 1500);
 
     } catch (error) {

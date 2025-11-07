@@ -32,16 +32,17 @@ function Register() {
         throw new Error(data.message || 'Error al registrarse');
       }
 
-      // --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
-      // Usamos sessionStorage para el "auto-login"
+      setMessage('¡Usuario registrado con éxito! Iniciando sesión...');
+
+      // --- ¡ESTA ES LA CORRECCIÓN! ---
+      // Guardamos en sessionStorage para el "auto-login"
       sessionStorage.setItem('token', data.token);
       sessionStorage.setItem('userId', data.userId);
-      // ---------------------------------
+      // -------------------------------
 
-      setMessage('¡Usuario registrado con éxito! Redirigiendo...');
-
+      // Redirigimos al dashboard, ¡no al login!
       setTimeout(() => {
-        navigate('/dashboard'); // Lo mandamos directo al dashboard
+        navigate('/dashboard'); 
       }, 2000);
 
     } catch (error) {
@@ -57,8 +58,7 @@ function Register() {
       </Link>
       
       <h2>Crear una cuenta</h2>
-      <p className="login-intro-text">Únete a nuestra comunidad</p>
-
+      {/* ...el resto de tu formulario... */}
       <form className="login-form" onSubmit={handleSubmit}> 
         <div className="form-group">
           <label htmlFor="regUsername">Nombre de usuario:</label>
