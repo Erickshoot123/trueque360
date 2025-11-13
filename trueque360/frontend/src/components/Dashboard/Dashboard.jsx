@@ -51,7 +51,7 @@ function Dashboard() {
                     <ul>
                         <li className="active"><Link to="/dashboard"><span className="fas fa-home">🏠</span> Dashboard</Link></li>
                         <li><Link to="/inventory"><span className="fas fa-box">📦</span> Inventario</Link></li>
-                        <li><Link to="/trades"><span className="fas fa-exchange-alt">🔄</span> Trueques</Link></li>
+                        <li><Link to="/trueques"><span className="fas fa-exchange-alt">🤝</span> Trueques</Link></li>
                         
                         {/* --- ¡AQUÍ ESTÁ EL LINK! --- */}
                         <li className="link-publicar">

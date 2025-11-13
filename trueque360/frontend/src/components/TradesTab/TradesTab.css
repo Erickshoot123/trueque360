@@ -1,0 +1,332 @@
+/* Contenedor principal */
+.trades-tab-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.trades-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.trades-section h2 {
+  color: #333;
+  font-size: 1.3rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.empty-state {
+  text-align: center;
+  color: #999;
+  padding: 2rem 1rem;
+  font-size: 1rem;
+}
+
+.trades-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Tarjeta de Trueque */
+.trade-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  background: #fafafa;
+}
+
+.trade-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #007bff;
+}
+
+.trade-card.trade-accepted {
+  border-color: #28a745;
+  background: #f0fff4;
+}
+
+.trade-card.trade-rejected {
+  border-color: #dc3545;
+  background: #fff5f5;
+  opacity: 0.7;
+}
+
+.trade-card.trade-pending {
+  border-color: #ffc107;
+  background: #fffbf0;
+}
+
+.trade-card.trade-completed {
+  border-color: #17a2b8;
+  background: #d1ecf1;
+  opacity: 0.8;
+}
+
+.trade-card.trade-cancelled {
+  border-color: #6c757d;
+  background: #e2e3e5;
+  opacity: 0.8;
+}
+
+/* Header del Trueque */
+.trade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trade-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.trade-status {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.trade-status.pending {
+  background: #ffc107;
+  color: #000;
+}
+
+.trade-status.accepted {
+  background: #28a745;
+  color: #fff;
+}
+
+.trade-status.rejected {
+  background: #dc3545;
+  color: #fff;
+}
+
+.trade-status.completed {
+  background: #17a2b8;
+  color: #fff;
+}
+
+.trade-status.cancelled {
+  background: #6c757d;
+  color: #fff;
+}
+
+/* Body del Trueque */
+.trade-body {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-around;
+}
+
+.trade-column {
+  flex: 1;
+  text-align: center;
+}
+
+.trade-column h4 {
+  margin: 0 0 0.5rem 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.trade-article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trade-article img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.trade-article p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 500;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trade-description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  background: #f0f0f0;
+  border-radius: 8px;
+  min-height: 130px;
+  border: 2px dashed #999;
+}
+
+.description-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+  word-wrap: break-word;
+  max-width: 120px;
+  text-align: center;
+}
+
+.trade-separator {
+  font-size: 1.5rem;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Acciones */
+.trade-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.btn-accept,
+.btn-reject,
+.btn-confirm,
+.btn-cancel-trade {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.btn-accept {
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+  color: white;
+}
+
+.btn-accept:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.btn-reject {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+}
+
+.btn-reject:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+}
+
+.btn-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.btn-cancel-trade {
+  background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+  color: white;
+}
+
+.btn-cancel-trade:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+/* Info Messages */
+.trade-accepted-info,
+.trade-rejected-info,
+.trade-info {
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.trade-accepted-info {
+  background: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.trade-rejected-info {
+  background: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+.trade-info {
+  background: #e7f3ff;
+  color: #004085;
+  border-left: 4px solid #007bff;
+}
+
+/* Loading */
+.trades-tab.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+/* Error */
+.error-message {
+  background: #fff5f5;
+  color: #dc3545;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #dc3545;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .trade-body {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .trade-actions {
+    flex-direction: column;
+  }
+
+  .btn-accept,
+  .btn-reject,
+  .btn-confirm,
+  .btn-cancel-trade {
+    width: 100%;
+  }
+
+  .trade-article img {
+    width: 80px;
+    height: 80px;
+  }
+}

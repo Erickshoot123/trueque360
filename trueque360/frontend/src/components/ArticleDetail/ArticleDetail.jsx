@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import ChatInitiator from '../ChatInitiator/ChatInitiator';
+import TradeProposal from '../TradeProposal/TradeProposal';
 import './ArticleDetail.css'; // Crearemos este CSS
 
 function ArticleDetail() {
@@ -10,6 +12,8 @@ function ArticleDetail() {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showChatInitiator, setShowChatInitiator] = useState(false);
+  const [showTradeProposal, setShowTradeProposal] = useState(false);
 
   // Verificamos si el usuario actual es el dueño
   const currentUserId = sessionStorage.getItem('userId');
@@ -66,6 +70,36 @@ function ArticleDetail() {
       alert('¡Artículo eliminado!'); // (Usamos alert temporalmente, idealmente sería un modal)
       navigate('/dashboard');
 
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // 3. Función para borrar conversaciones asociadas al artículo (solo dueño)
+  const handleDeleteArticleChats = async () => {
+    const confirmDelete = window.confirm('¿Eliminar todas las conversaciones relacionadas con este artículo? Esta acción no se puede deshacer.');
+    if (!confirmDelete) return;
+
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      setError('No estás autenticado para realizar esta acción.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/conversations/article/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Error al eliminar conversaciones');
+      }
+
+      alert('Conversaciones relacionadas con el artículo eliminadas correctamente');
     } catch (err) {
       setError(err.message);
     }
@@ -128,12 +162,61 @@ function ArticleDetail() {
           {/* --- ¡BOTÓN CONDICIONAL! --- */}
           {/* Solo se muestra si el 'isOwner' es true */}
           {isOwner && (
-            <button onClick={handleDelete} className="delete-button">
-              🗑️ Borrar Publicación
-            </button>
+            <>
+              <button onClick={handleDelete} className="delete-button">
+                🗑️ Borrar Publicación
+              </button>
+              <button onClick={handleDeleteArticleChats} className="delete-chats-button">
+                🧹 Borrar conversaciones del artículo
+              </button>
+            </>
+          )}
+
+          {/* --- ¡BOTÓN PARA CONTACTAR! --- */}
+          {/* Solo se muestra si el usuario NO es el dueño */}
+          {!isOwner && (
+            <>
+              <button 
+                onClick={() => setShowChatInitiator(true)} 
+                className="contact-button"
+              >
+                💬 Contactar al Vendedor
+              </button>
+              <button 
+                onClick={() => setShowTradeProposal(true)} 
+                className="trade-button"
+              >
+                🤝 Proponer Trueque
+              </button>
+            </>
           )}
         </div>
       </div>
+
+      {/* Modal de ChatInitiator */}
+      {showChatInitiator && (
+        <ChatInitiator
+          articleOwner={article.owner}
+          articleId={article._id}
+          onClose={() => setShowChatInitiator(false)}
+          onSuccess={() => {
+            alert('¡Mensaje enviado! Ve a la sección de Mensajes para continuar la conversación.');
+            setShowChatInitiator(false);
+          }}
+        />
+      )}
+
+      {/* Modal de Propuesta de Trueque */}
+      {showTradeProposal && (
+        <TradeProposal
+          articleId={article._id}
+          articleOwner={article.owner}
+          onClose={() => setShowTradeProposal(false)}
+          onSuccess={() => {
+            setShowTradeProposal(false);
+          }}
+        />
+      )}
     </div>
   );
 }

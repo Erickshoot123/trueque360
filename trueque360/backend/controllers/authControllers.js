@@ -119,6 +119,7 @@ exports.loginUser = async (req, res) => {
             success: true,
             message: 'Inicio de sesión exitoso',
             token,
+            userId: user._id.toString(),
             user: { username: user.username, email: user.email, role: user.role}
         });
 

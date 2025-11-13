@@ -8,6 +8,8 @@ import Login from './components/Login/login';
 import Register from './components/Register/Register';
 import Dashboard from './components/Dashboard/Dashboard';
 import CreateArticle from './components/CreateArticle/CreateArticle';
+import MessageTab from './components/MessageTab/MessageTab';
+import TradesTab from './components/TradesTab/TradesTab';
 
 // --- 2. IMPORTAMOS LA NUEVA PÁGINA DE DETALLES Y SU CSS ---
 import ArticleDetail from './components/ArticleDetail/ArticleDetail';
@@ -71,6 +73,26 @@ function App() {
             element={
               <PrivateRoute>
                 <CreateArticle />
+              </PrivateRoute>
+            } 
+          />
+          
+          {/* --- Ruta de Mensajes --- */}
+          <Route 
+            path="/messages" 
+            element={
+              <PrivateRoute>
+                <MessageTab />
+              </PrivateRoute>
+            } 
+          />
+          
+          {/* --- Ruta de Trueques --- */}
+          <Route 
+            path="/trueques" 
+            element={
+              <PrivateRoute>
+                <TradesTab />
               </PrivateRoute>
             } 
           />

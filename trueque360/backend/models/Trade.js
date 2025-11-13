@@ -17,18 +17,32 @@ const tradeSchema = new Schema({
         required: true,
     },
 
-    // Artículo que ofrece el proponente
+    // Artículo que ofrece el proponente (opcional si hay descripción)
     proposerArticle: {
         type: Schema.Types.ObjectId,
         ref: 'Article',
-        required: true,
+        required: false,
     },
 
-    // Artículo que el receptor tiene y que el proponente desea
+    // Descripción del artículo que ofrece el proponente (si no es publicado)
+    proposedItemDescription: {
+        type: String,
+        required: false,
+        maxlength: 500,
+    },
+
+    // Artículo que el receptor tiene y que el proponente desea (opcional si hay descripción)
     receiverArticle: {
         type: Schema.Types.ObjectId,
         ref: 'Article',
-        required: true,
+        required: false,
+    },
+
+    // Descripción del artículo que desea del receptor (si no es publicado)
+    requestedItemDescription: {
+        type: String,
+        required: false,
+        maxlength: 500,
     },
     
     // Estado del trueque
