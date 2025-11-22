@@ -169,6 +169,13 @@ function ArticleDetail() {
               <button onClick={handleDeleteArticleChats} className="delete-chats-button">
                 🧹 Borrar conversaciones del artículo
               </button>
+              {/* Para este boton pueden hacerlo con un modal o con otra vista/pagina */}
+              <button 
+                onClick={() => navigate(`/articulo/editar/${article._id}`)}
+                className='edit-button'
+              >
+                ✏️ Editar Publicación
+              </button>
             </>
           )}
 
