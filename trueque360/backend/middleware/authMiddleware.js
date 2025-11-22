@@ -14,7 +14,13 @@ const verifyToken = (req, res, next) => {
 
   try {
     const verified = jwt.verify(token, JWT_SECRET);
+    // Normalizamos el objeto user en req para que siempre tenga `id`.
+    // Algunos tokens podrían venir con `_id` en lugar de `id`.
     req.user = verified;
+    if (!req.user.id && req.user._id) {
+      // Convertir ObjectId a string cuando corresponda
+      req.user.id = typeof req.user._id === 'string' ? req.user._id : req.user._id.toString();
+    }
     next();
   } catch (error) {
     res.status(401).json({ 

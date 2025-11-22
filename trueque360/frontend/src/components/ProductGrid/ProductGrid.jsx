@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 // (No necesitas importar el CSS aquí si ya lo haces en Dashboard.js)
 import './ProductGrid.css'; // <-- ¡HE CORREGIDO ESTO!
 
-function ProductGrid() {
+function ProductGrid({ selectedCategory = 'Todos' }) {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,6 +30,11 @@ function ProductGrid() {
     fetchArticles();
   }, []); // El array vacío [] significa que esto se ejecuta 1 vez al montar el componente
 
+  // --- Filtrar artículos según la categoría seleccionada ---
+  const filteredArticles = selectedCategory === 'Todos' 
+    ? articles 
+    : articles.filter(article => article.category === selectedCategory);
+
   // --- Renderizado de Carga ---
   if (loading) {
     return <div className="product-grid-loading">Cargando artículos...</div>;
@@ -47,8 +52,8 @@ function ProductGrid() {
 
       {/* Contenedor de la cuadrícula */}
       <div className="product-grid">
-        {articles.length > 0 ? (
-          articles.map(article => (
+        {filteredArticles.length > 0 ? (
+          filteredArticles.map(article => (
             // --- ¡AQUÍ ESTÁ EL CAMBIO! ---
             // Cada tarjeta ahora es un Link a su página de detalle
             <Link to={`/articulo/${article._id}`} key={article._id} className="product-card-link">
@@ -73,7 +78,7 @@ function ProductGrid() {
             </Link>
           ))
         ) : (
-          <p>No hay artículos disponibles en este momento.</p>
+          <p>No hay artículos disponibles en esta categoría.</p>
         )}
       </div>
     </div>

@@ -9,7 +9,11 @@ exports.createArticle = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Error de validación', errors: errors.array().map(err => err.msg) });
         }
 
-        const owner = req.user.id; 
+        // Aceptar tanto `id` como `_id` en el objeto user (normalizado en el middleware)
+        const owner = req.user && (req.user.id || req.user._id);
+        if (!owner) {
+            return res.status(401).json({ success: false, message: 'Usuario no autenticado correctamente' });
+        }
         const { title, description, category, images, preferredItems } = req.body;
 
         const newArticle = new Article({
@@ -29,7 +33,7 @@ exports.createArticle = async (req, res) => {
             article: newArticle 
         });
 
-    } catch (error) {
+    } catch (error) {~
         console.error('Error al crear artículo:', error);
         res.status(500).json({ success: false, message: 'Error interno del servidor' });
     }
@@ -84,13 +88,9 @@ exports.updateArticle = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Artículo no encontrado' });
         }
 
-        if (!article.owner.equals(req.user.id)) {
+        const userId = req.user && (req.user.id || req.user._id);
+        if (!article.owner.equals(userId)) {
             return res.status(403).json({ success: false, message: 'No tienes permiso para actualizar este artículo.' });
-        }
-
-        // Prohibir cambiar el status si se intenta por aquí
-        if (updates.status) {
-            delete updates.status;
         }
 
         Object.assign(article, updates);
@@ -121,7 +121,8 @@ exports.deleteArticle = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Artículo no encontrado' }); 
         }
 
-        if (!article.owner.equals(req.user.id)) {
+        const userIdDel = req.user && (req.user.id || req.user._id);
+        if (!article.owner.equals(userIdDel)) {
             return res.status(403).json({ success: false, message: 'No tienes permiso para eliminar este artículo.' });
         }
         

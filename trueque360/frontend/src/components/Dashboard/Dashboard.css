@@ -3,7 +3,7 @@ body, html, #root {
     margin: 0;
     padding: 0;
     /* CORRECCIÓN DE SCROLL: Altura automática para permitir que la página crezca */
-    height: auto; 
+    height: 100%; 
     
     font-family: 'Roboto', 'Arial', sans-serif; 
     overflow-x: hidden; /* Evita el scroll horizontal */
@@ -11,9 +11,10 @@ body, html, #root {
 
 .dashboard-layout {
     display: flex;
-    min-height: 100vh; 
+    height: 100vh; /* Altura exacta de la ventana */
     background-color: #f8f9fa; /* Fondo gris extremadamente claro */
     color: #333;
+    overflow: hidden; /* Previene overflow de todo el layout */
 }
 
 /* -------------------------------------- */
@@ -74,9 +75,12 @@ body, html, #root {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 2rem; 
+    padding: 2rem;
+    max-width: 100%;
     /* CLAVE PARA EL SCROLL: Permite el scroll vertical en el contenido principal. */
     overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 0; /* Previene que flex items rompan el layout */
 }
 
 /* -------------------------------------- */
@@ -88,6 +92,9 @@ body, html, #root {
     align-items: center;
     padding: 0 0 1rem 0; 
     margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 100%;
 }
 
 .main-header h2 {
@@ -95,11 +102,15 @@ body, html, #root {
     font-weight: 600;
     color: #495057;
     margin: 0;
+    flex: 1;
+    min-width: 150px;
+    word-break: break-word;
 }
 
 .header-search {
     position: relative;
-    flex-grow: 1;
+    flex: 1;
+    min-width: 200px;
     max-width: 400px;
     margin-right: 1.5rem;
 }
@@ -113,12 +124,50 @@ body, html, #root {
     font-size: 1rem;
     background-color: #ffffff;
     transition: border-color 0.3s;
+    box-sizing: border-box;
 }
 
 .header-search input:focus {
     border-color: #007bff;
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); 
+}
+
+.category-select {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    padding-left: 3rem;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.category-select:hover {
+    border-color: #007bff;
+    background-color: #f8fbff;
+}
+
+.category-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    background-color: #ffffff;
+}
+
+.category-select option {
+    padding: 0.5rem;
+    background-color: #ffffff;
+    color: #333;
 }
 
 .header-search span {
@@ -128,6 +177,7 @@ body, html, #root {
     transform: translateY(-50%);
     color: #adb5bd;
     font-size: 1.1rem;
+    pointer-events: none;
 }
 
 .header-nav {
@@ -170,12 +220,17 @@ body, html, #root {
     padding: 5px 0;
 }
 
+.profile-dropdown-menu:hover {
+    cursor: default;
+}
+
 .dropdown-item {
     display: block;
     padding: 10px 15px;
+    text-align: center;
     color: #333;
     text-decoration: none;
-    font-size: 0.95rem;
+       font-size: 1rem;
     transition: background-color 0.2s;
 }
 
@@ -186,18 +241,20 @@ body, html, #root {
 .logout-button-dropdown {
     display: block;
     padding: 10px 15px;
-    margin-top: 5px;
-    border-top: 1px solid #eee;
+    min-width: 150px;
     color: #dc3545; /* Rojo suave para acción de salida */
-    text-align: left;
+    background-color: #ffffff;
+    border: none;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 1rem;
+        z-index: 100;
     transition: background-color 0.2s;
 }
 
 .logout-button-dropdown:hover {
     background-color: #ffe8e8; 
     color: #c82333;
+    cursor: pointer;
 }
 
 /* -------------------------------------- */
@@ -205,9 +262,11 @@ body, html, #root {
 /* -------------------------------------- */
 .widgets-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem; 
     margin-bottom: 2rem;
+    max-width: 100%;
+    width: 100%;
 }
 
 .widget {
@@ -217,6 +276,11 @@ body, html, #root {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); 
     border: 1px solid #f0f0f0; 
     transition: box-shadow 0.2s, transform 0.2s;
+    min-width: 0; /* Previene que el contenido rompa la grid */
+    overflow: hidden; /* Contiene el contenido dentro del widget */
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Espaciado entre elementos internos */
 }
 
 .widget:hover {
@@ -226,16 +290,28 @@ body, html, #root {
 
 .widget h3, .widget h4 {
     color: #333;
-    margin-top: 0;
+    margin: 0; /* Elimina margen para que el gap maneje el espacio */
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.widget p {
+    margin: 0; /* Elimina margen predeterminado de párrafos */
 }
 
 .large-card {
-    grid-column: span 2;
+    grid-column: span 1; /* Cambio: span 1 en lugar de span 2 para evitar problemas responsivos */
     /* Degradado de azul de marca */
     background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); 
     color: white;
     border: none;
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); 
+}
+
+@media (min-width: 900px) {
+    .large-card {
+        grid-column: span 2; /* Solo en escritorio grande el large-card ocupa 2 columnas */
+    }
 }
 
 .small-card .card-image {
@@ -245,11 +321,16 @@ body, html, #root {
     border-radius: 10px;
     width: 60px;
     height: 60px;
-    font-size: 1.5rem;
-    display: flex;
+    font-size: 1.2rem;
+    display: none; /* Ocultamos el contenedor de iconos ya que no lo usamos */
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
+    flex-shrink: 0;
+    overflow: hidden;
+    line-height: 1;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .widget-value {
@@ -271,44 +352,62 @@ body, html, #root {
         bottom: 0; 
         z-index: 1000;
         box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+        height: auto;
     }
     .sidebar-logo { display: none; } 
     .sidebar-nav ul {
         display: flex;
         width: 100%;
+        flex-wrap: wrap;
     }
     .sidebar-nav li {
         flex: 1;
         text-align: center;
+        min-width: 60px;
     }
     .sidebar-nav a {
         padding: 0.5rem;
         flex-direction: column;
         gap: 5px;
+        font-size: 0.75rem;
     }
     .main-content { 
-        padding: 1rem; 
+        padding: 1rem;
         margin-bottom: 70px; /* Espacio para la sidebar fija */
+        overflow-y: auto;
     }
     .main-header { 
         flex-direction: column; 
         align-items: flex-start; 
-        gap: 1rem; 
+        gap: 1rem;
+        position: relative;
+    }
+    .main-header h2 {
+        font-size: 1.5rem;
+        width: 100%;
     }
     .header-search { 
-        max-width: 100%; 
+        max-width: 100%;
+        width: 100%;
         margin-right: 0; 
     }
     .header-nav { 
         /* Reorganizamos el header-nav en móvil */
         position: absolute;
-        top: 20px;
-        right: 20px;
+        top: 0;
+        right: 0;
     }
     .widgets-grid { 
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .widget {
+        padding: 1rem;
     }
     .large-card { 
-        grid-column: span 1; 
+        grid-column: span 1;
+    }
+    .product-grid-container {
+        padding: 1rem;
     }
 }

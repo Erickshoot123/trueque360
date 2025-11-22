@@ -34,6 +34,12 @@ router.post('/login', loginLimiter, loginValidations, authController.loginUser);
 // RUTA GET /api/perfil (Protegida)
 router.get('/perfil', verifyToken, authController.getProfile);
 
+// RUTA PUT /api/perfil (Actualizar perfil)
+router.put('/perfil', verifyToken, authController.updateProfile);
+
+// RUTA GET /api/stats (Obtener estadísticas del usuario actual - Protegida)
+router.get('/stats', verifyToken, authController.getUserStats);
+
 // Este endpoint solo funcionará si el token es válido Y el usuario tiene role: 'admin'
 router.get('/admin/dashboard', verifyToken, isAdmin, authController.getAdminDashboardData);
 

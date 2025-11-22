@@ -50,8 +50,8 @@ function Login() {
 
   return (
     <> 
-      <h2>¡Le damos la bienvenida!</h2>
-      <p className="login-intro-text">Inicie sesión en su cuenta</p>
+      <h2>¡Te damos la bienvenida!</h2>
+      <p className="login-intro-text">Inicia sesión en tu cuenta</p>
       
       <form className="login-form" onSubmit={handleSubmit}>
         <div className="form-group">
@@ -88,7 +88,7 @@ function Login() {
       
       <div className="register-prompt">
         <p>
-          ¿No tiene cuenta? <Link to="/registro">Crear una</Link> 
+          ¿No tienes cuenta? <Link to="/registro">Crear una</Link> 
         </p>
       </div>
     </>

@@ -32,6 +32,13 @@ const userSchema = new Schema({
     required: true
   }
 
+  , socialLinks: [
+    {
+      name: { type: String, trim: true }, // e.g. "Instagram"
+      url: { type: String, trim: true }
+    }
+  ]
+
 
 }, {
   timestamps: true 

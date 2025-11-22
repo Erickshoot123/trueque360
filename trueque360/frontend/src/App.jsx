@@ -8,8 +8,11 @@ import Login from './components/Login/login';
 import Register from './components/Register/Register';
 import Dashboard from './components/Dashboard/Dashboard';
 import CreateArticle from './components/CreateArticle/CreateArticle';
+import EditArticle from './components/EditArticle/EditArticle';
 import MessageTab from './components/MessageTab/MessageTab';
 import TradesTab from './components/TradesTab/TradesTab';
+import Inventory from './components/Inventory/Inventory';
+import Profile from './components/Profile/Profile';
 
 // --- 2. IMPORTAMOS LA NUEVA PÁGINA DE DETALLES Y SU CSS ---
 import ArticleDetail from './components/ArticleDetail/ArticleDetail';
@@ -17,6 +20,7 @@ import './components/ArticleDetail/ArticleDetail.css';
 
 // --- Importamos el CSS del formulario (que faltaba) ---
 import './components/CreateArticle/CreateArticle.css';
+import './components/Inventory/Inventory.css';
 
 // --- 3. DEFINIMOS EL 'PRIVATE ROUTE' ---
 // Este componente revisa si el usuario tiene un token
@@ -76,6 +80,14 @@ function App() {
               </PrivateRoute>
             } 
           />
+          <Route 
+            path="/editar/:id" 
+            element={
+              <PrivateRoute>
+                <EditArticle />
+              </PrivateRoute>
+            } 
+          />
           
           {/* --- Ruta de Mensajes --- */}
           <Route 
@@ -95,6 +107,26 @@ function App() {
                 <TradesTab />
               </PrivateRoute>
             } 
+          />
+          
+          {/* --- Ruta de Inventario --- */}
+          <Route 
+            path="/inventory" 
+            element={
+              <PrivateRoute>
+                <Inventory />
+              </PrivateRoute>
+            } 
+          />
+
+          {/* Profile */}
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
           />
           
           {/* --- 4. AÑADIMOS LA RUTA QUE FALTABA --- */}

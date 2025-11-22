@@ -85,7 +85,7 @@ function CreateArticle() {
     <div className="create-article-layout">
         <nav className="create-article-nav">
             <Link to="/dashboard">&larr; Volver al Dashboard</Link>
-            <h2>Publicar Nuevo Trueque</h2>
+            <h2>Publicar nuevo artículo</h2>
         </nav>
         <div className="create-article-container">
             <form className="create-article-form" onSubmit={handleSubmit}>
