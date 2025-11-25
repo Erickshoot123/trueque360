@@ -6,7 +6,6 @@
   "scripts": {
     "start": "cd backend && npm start",
     "dev": "cd backend && npm start",
-    "install": "cd backend && npm install",
     "build": "cd backend && npm install --production"
   },
   "workspaces": [
