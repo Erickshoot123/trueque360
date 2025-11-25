@@ -14,7 +14,7 @@ function ProductGrid({ selectedCategory = 'Todos' }) {
     const fetchArticles = async () => {
       try {
         // Llamamos a la API del backend (ruta pública)
-        const response = await fetch('http://localhost:3000/api/articles');
+        const response = await fetch('https://trueque360.onrender.com/api/articles');
         if (!response.ok) {
           throw new Error('Error al cargar los artículos');
         }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Profile.css';
 
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://trueque360.onrender.com';
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);

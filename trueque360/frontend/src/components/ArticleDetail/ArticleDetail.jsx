@@ -25,7 +25,7 @@ function ArticleDetail() {
       try {
         setLoading(true);
         // Llamamos al endpoint de la API que ya creaste
-        const response = await fetch(`http://localhost:3000/api/articles/${id}`);
+        const response = await fetch(`https://trueque360.onrender.com/api/articles/${id}`);
         const data = await response.json();
 
         if (!response.ok) {

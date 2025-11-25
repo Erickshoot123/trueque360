@@ -20,7 +20,7 @@ function MessageTab() {
     const fetchConversations = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/conversations', {
+        const response = await fetch('https://trueque360.onrender.com/api/conversations', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -50,7 +50,7 @@ function MessageTab() {
     const fetchMessages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/messages/conversation/${selectedConversation._id}`,
+          `https://trueque360.onrender.com/api/messages/conversation/${selectedConversation._id}`,
           {
             headers: {
               'Authorization': `Bearer ${token}`
@@ -89,7 +89,7 @@ function MessageTab() {
         p => p._id.toString() !== userId
       );
 
-      const response = await fetch('http://localhost:3000/api/messages', {
+      const response = await fetch('https://trueque360.onrender.com/api/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ function MessageTab() {
                     if (!confirmDelete) return;
 
                     try {
-                      const response = await fetch(`http://localhost:3000/api/conversations/${selectedConversation._id}`, {
+                      const response = await fetch(`https://trueque360.onrender.com/api/conversations/${selectedConversation._id}`, {
                         method: 'DELETE',
                         headers: {
                           'Authorization': `Bearer ${token}`
