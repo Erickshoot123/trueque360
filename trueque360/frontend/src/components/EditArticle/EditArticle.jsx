@@ -32,7 +32,7 @@ function EditArticle() {
       }
 
       try {
-        const response = await fetch(`https://trueque360.onrender.com/api/articles/${id}`, {/${id}`, {
+        const response = await fetch(`https://trueque360.onrender.com/api/articles/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
