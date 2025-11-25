@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: trueque360-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install --production
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value:
+        sync: false
+      - key: JWT_SECRET
+        value:
+        sync: false
+      - key: CLIENT_URL
+        value:
+        sync: false

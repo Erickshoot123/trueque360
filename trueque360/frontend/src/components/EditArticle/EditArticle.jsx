@@ -49,8 +49,8 @@ function EditArticle() {
         setTitle(article.title || '');
         setDescription(article.description || '');
         setCategory(article.category || 'Otros');
-        setImages(article.images.join(', ') || '');
-        setPreferredItems(article.preferredItems.join(', ') || '');
+        setImages(Array.isArray(article.images) ? article.images.join(', ') : (article.images || ''));
+        setPreferredItems(Array.isArray(article.preferredItems) ? article.preferredItems.join(', ') : (article.preferredItems || ''));
         setStatus(article.status || 'Disponible');
         setIsLoading(false);
       } catch (err) {

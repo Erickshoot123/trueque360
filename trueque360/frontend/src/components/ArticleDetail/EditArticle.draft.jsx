@@ -1,8 +1,8 @@
-// Archivo renombrado/convertido a stub para evitar que una versión incompleta rompa el build
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Link, useParams} from 'react-router-dom';
+import './ArticleDetail.css'; // Importamos el CSS
 
 function EditArticle() {
- HEAD
     const { id } = useParams(); 
 
     // Estados para cada campo del formulario
@@ -33,9 +33,8 @@ function EditArticle() {
             throw new Error(data.message || 'No se pudo cargar el artículo');
             }
             setArticle(data.article);
-            } catch (err) {
-                // report user-friendly message in the same state field used by the form
-                setMessage(err.message || 'Error al cargar el artículo');
+        } catch (err) {
+            setError(err.message);
         } finally {
             setIsLoading(false);
         }
@@ -89,8 +88,8 @@ function EditArticle() {
                             <input 
                                 type="text" 
                                 id="title"
-                                value={article ? article.title : ''}
-                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), title: e.target.value }))}
+                                value={article ? article.title : ''} 
+                                onChange={(e) => setTitle(e.target.value)} 
                                 placeholder="Ej: iPhone 12 casi nuevo" 
                                 required 
                             />
@@ -99,8 +98,8 @@ function EditArticle() {
                             <label htmlFor="description">Descripción</label>
                             <textarea 
                                 id="description"
-                                value={article ? article.description : ''}
-                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), description: e.target.value }))}
+                                value={article ? article.description : ''} 
+                                onChange={(e) => setDescription(e.target.value)} 
                                 placeholder="Describe tu artículo, su estado, etc." 
                                 required 
                             />
@@ -108,8 +107,8 @@ function EditArticle() {
                         <div className="form-group">
                             <label htmlFor="category">Categoría</label>
                             <select id="category"
-                                value={article ? article.category : 'Otros'}
-                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), category: e.target.value }))}
+                                value={article ? article.category : 'Otros'} 
+                                onChange={(e) => setCategory(e.target.value)}
                             >
                                 {categories.map(cat => (
                                 <option key={cat} value={cat}>{cat}</option>
@@ -121,8 +120,8 @@ function EditArticle() {
                             <input
                                 type="text"
                                 id="images"
-                                value={article ? (Array.isArray(article.images) ? article.images.join(', ') : (article.images || '')) : ''}
-                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), images: e.target.value }))}
+                                value={article ? article.images : ''} 
+                                onChange={(e) => setImages(e.target.value)} 
                                 placeholder="Ej: https://example.com/imagen1.jpg, https://example.com/imagen2.jpg" 
                                 required 
                             />
@@ -134,15 +133,15 @@ function EditArticle() {
                             <input 
                                 type="text" 
                                 id="preferredItems"
-                                value={article ? (Array.isArray(article.preferredItems) ? article.preferredItems.join(', ') : (article.preferredItems || '')) : ''}
-                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), preferredItems: e.target.value }))}
+                                value={article ? article.preferredItems : ''} 
+                                onChange={(e) => setPreferredItems(e.target.value)} 
                                 placeholder="Ej: Laptop, Bicicleta, Libros" 
                             />
                             <small>Separar múltiples ítems con una coma (,)</small>
                         </div>
 
                         <button type="submit" className="submit-btn" disabled={isLoading}>
-                            {isLoading ? 'Guardando...' : 'Guardar cambios'}
+                            {isLoading ? 'Publicando...' : 'Publicar Artículo'}
                         </button>
                 
                         {message && <p className="form-message">{message}</p>}
@@ -151,14 +150,6 @@ function EditArticle() {
             </div>
         </>
     );
-
-  return (
-    <div style={{ padding: '1rem' }}>
-      <h3>Componente de edición (versión de borrador)</h3>
-      <p>Este archivo es un borrador y no debe usarse en producción. Usa <code>components/EditArticle/EditArticle.jsx</code> en su lugar.</p>
-    </div>
-  );
-
 }
 
 export default EditArticle;

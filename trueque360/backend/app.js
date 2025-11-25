@@ -9,25 +9,30 @@ const conversationRoutes = require('./routes/conversationRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const tradeRoutes = require('./routes/tradeRoutes');
 
-// --- Configuración Inicial ---
 const app = express();
 
-// Middlewares globales
-app.use(cors()); 
-app.use(express.json()); 
+// Middlewares - CORS Configuration
+// In development, allow all origins. In production, restrict to CLIENT_URL
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production' 
+        ? process.env.CLIENT_URL 
+        : '*',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+
+app.use(express.json());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
-// --- Montaje de Rutas ---
-// Montamos todas las rutas de autenticación bajo el prefijo /api
-app.use('/api', authRoutes); 
-// Montamos las rutas de artículos
+// Prefijo general de la API
+app.use('/api', authRoutes);
 app.use('/api/articles', articleRoutes);
-// Montamos las rutas de conversaciones
 app.use('/api/conversations', conversationRoutes);
-// Montamos las rutas de mensajes
 app.use('/api/messages', messageRoutes);
-// Montamos las rutas de trueques
 app.use('/api/trades', tradeRoutes);
 
-// Exportamos la aplicación
+// Exportamos app para server.js
 module.exports = app;

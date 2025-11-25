@@ -1,0 +1,19 @@
+{
+  "name": "trueque360",
+  "version": "1.0.0",
+  "description": "Trueque360 - Platform for exchanging goods",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm start",
+    "install": "cd backend && npm install",
+    "build": "cd backend && npm install --production"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
