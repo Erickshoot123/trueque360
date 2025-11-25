@@ -171,23 +171,23 @@ function Dashboard() {
                     {!loadingStats ? (
                         <>
                             <SmallWidget 
-                                title="Publicaciones Pendientes" 
+                                title="🗄️ Publicaciones Pendientes" 
                                 value={stats?.articlesCount ?? 0}
                                 onClick={() => navigate('/inventory')}
                             />
                             <SmallWidget 
-                                title="Trueques Completados" 
+                                title="✅ Trueques Completados" 
                                 value={stats?.completedTradesCount ?? 0}
                                 onClick={() => navigate('/trueques')}
                             />
                             <SmallWidget 
-                                title="Mensajes Totales" 
+                                title="💬 Mensajes Totales" 
                                 value={stats?.messagesCount ?? 0}
                                 onClick={() => navigate('/messages')}
                             />
                             {/* Tarjeta Grande - Última actividad */}
                             <div className="widget large-card" onClick={() => navigate('/inventory')} style={{ cursor: 'pointer' }}>
-                                <h3>Actividad Reciente</h3>
+                                <h3>📥 Actividad Reciente</h3>
                                 <p>{stats?.lastArticleTitle ? `Último artículo: ${stats.lastArticleTitle}` : 'Sin artículos publicados aún'}</p>
                             </div>
                         </>
