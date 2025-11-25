@@ -17,7 +17,6 @@ import Profile from './components/Profile/Profile';
 // --- 2. IMPORTAMOS LA NUEVA PÁGINA DE DETALLES Y SU CSS ---
 import ArticleDetail from './components/ArticleDetail/ArticleDetail';
 import './components/ArticleDetail/ArticleDetail.css';
-import EditArticle from './components/ArticleDetail/EditArticle';
 
 // --- Importamos el CSS del formulario (que faltaba) ---
 import './components/CreateArticle/CreateArticle.css';
