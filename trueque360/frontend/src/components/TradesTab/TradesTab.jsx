@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './TradesTab.css';
 
 function TradesTab() {
@@ -90,6 +90,23 @@ function TradesTab() {
     }
   };
 
+  // Build a list of available statuses from received+sent so the combobox shows
+  // only actual statuses present for this user. Always include 'All'.
+  const [selectedStatus, setSelectedStatus] = useState('All');
+  const statusOptions = useMemo(() => {
+    const s = new Set();
+    (trades.received || []).forEach(t => t.status && s.add(t.status));
+    (trades.sent || []).forEach(t => t.status && s.add(t.status));
+    const arr = Array.from(s).sort();
+    return ['All', ...arr];
+  }, [trades]);
+
+  const filterList = (list) => {
+    if (!list) return [];
+    if (selectedStatus === 'All') return list;
+    return list.filter(t => t.status === selectedStatus);
+  };
+
   if (loading) {
     return <div className="trades-tab loading">Cargando trueques...</div>;
   }
@@ -98,14 +115,24 @@ function TradesTab() {
     <div className="trades-tab-container">
       {error && <div className="error-message">{error}</div>}
 
+      {/* Filter control */}
+      <div className="trades-filter">
+        <label htmlFor="trade-status-filter">Filtrar por estado:</label>
+        <select id="trade-status-filter" className="trades-status-select" value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
+          {statusOptions.map(s => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+      </div>
+
       {/* Trueques Recibidos */}
       <div className="trades-section">
         <h2>📥 Solicitudes de Trueque Recibidas</h2>
-        {trades.received.length === 0 ? (
+        {filterList(trades.received).length === 0 ? (
           <p className="empty-state">No tienes solicitudes de trueque recibidas</p>
         ) : (
           <div className="trades-list">
-            {trades.received.map(trade => (
+            {filterList(trades.received).map(trade => (
               <div key={trade._id} className={`trade-card trade-${trade.status.toLowerCase()}`}>
                 <div className="trade-header">
                   <h3>🤝 Trueque de {trade.proposer.username}</h3>
@@ -202,11 +229,11 @@ function TradesTab() {
       {/* Trueques Enviados */}
       <div className="trades-section">
         <h2>📤 Solicitudes de Trueque Enviadas</h2>
-        {trades.sent.length === 0 ? (
+        {filterList(trades.sent).length === 0 ? (
           <p className="empty-state">No has enviado solicitudes de trueque</p>
         ) : (
           <div className="trades-list">
-            {trades.sent.map(trade => (
+            {filterList(trades.sent).map(trade => (
               <div key={trade._id} className={`trade-card trade-${trade.status.toLowerCase()}`}>
                 <div className="trade-header">
                   <h3>🤝 Trueque para {trade.receiver.username}</h3>

@@ -33,8 +33,9 @@ function EditArticle() {
             throw new Error(data.message || 'No se pudo cargar el artículo');
             }
             setArticle(data.article);
-        } catch (err) {
-            setError(err.message);
+            } catch (err) {
+                // report user-friendly message in the same state field used by the form
+                setMessage(err.message || 'Error al cargar el artículo');
         } finally {
             setIsLoading(false);
         }
@@ -88,8 +89,8 @@ function EditArticle() {
                             <input 
                                 type="text" 
                                 id="title"
-                                value={article ? article.title : ''} 
-                                onChange={(e) => setTitle(e.target.value)} 
+                                value={article ? article.title : ''}
+                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), title: e.target.value }))}
                                 placeholder="Ej: iPhone 12 casi nuevo" 
                                 required 
                             />
@@ -98,8 +99,8 @@ function EditArticle() {
                             <label htmlFor="description">Descripción</label>
                             <textarea 
                                 id="description"
-                                value={article ? article.description : ''} 
-                                onChange={(e) => setDescription(e.target.value)} 
+                                value={article ? article.description : ''}
+                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), description: e.target.value }))}
                                 placeholder="Describe tu artículo, su estado, etc." 
                                 required 
                             />
@@ -107,8 +108,8 @@ function EditArticle() {
                         <div className="form-group">
                             <label htmlFor="category">Categoría</label>
                             <select id="category"
-                                value={article ? article.category : 'Otros'} 
-                                onChange={(e) => setCategory(e.target.value)}
+                                value={article ? article.category : 'Otros'}
+                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), category: e.target.value }))}
                             >
                                 {categories.map(cat => (
                                 <option key={cat} value={cat}>{cat}</option>
@@ -120,8 +121,8 @@ function EditArticle() {
                             <input
                                 type="text"
                                 id="images"
-                                value={article ? article.images : ''} 
-                                onChange={(e) => setImages(e.target.value)} 
+                                value={article ? (Array.isArray(article.images) ? article.images.join(', ') : (article.images || '')) : ''}
+                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), images: e.target.value }))}
                                 placeholder="Ej: https://example.com/imagen1.jpg, https://example.com/imagen2.jpg" 
                                 required 
                             />
@@ -133,15 +134,15 @@ function EditArticle() {
                             <input 
                                 type="text" 
                                 id="preferredItems"
-                                value={article ? article.preferredItems : ''} 
-                                onChange={(e) => setPreferredItems(e.target.value)} 
+                                value={article ? (Array.isArray(article.preferredItems) ? article.preferredItems.join(', ') : (article.preferredItems || '')) : ''}
+                                onChange={(e) => setArticle(prev => ({ ...(prev || {}), preferredItems: e.target.value }))}
                                 placeholder="Ej: Laptop, Bicicleta, Libros" 
                             />
                             <small>Separar múltiples ítems con una coma (,)</small>
                         </div>
 
                         <button type="submit" className="submit-btn" disabled={isLoading}>
-                            {isLoading ? 'Publicando...' : 'Publicar Artículo'}
+                            {isLoading ? 'Guardando...' : 'Guardar cambios'}
                         </button>
                 
                         {message && <p className="form-message">{message}</p>}

@@ -88,12 +88,20 @@ const Profile = () => {
             <div className="profile-body">
                 {message && <p className="hint">{message}</p>}
 
+                {/* show an ID line so `profile` state is actually used */}
+                {profile && (
+                    <div className="field small">
+                        <label>ID</label>
+                        <input className="input-small" value={profile._id || ''} readOnly />
+                    </div>
+                )}
+
                 <div className="field">
                     <label>Nombre de usuario</label>
                     <input
                         className="input-large"
                         value={username} readOnly
-                       
+                        
                     />
                 </div>
 
@@ -107,11 +115,11 @@ const Profile = () => {
                     <input className="input-large readonly" value={role} readOnly />
                 </div>
 
-                {/* <div className="profile-actions">
+                <div className="profile-actions">
                     <button className="btn-save" onClick={handleSave} disabled={saving}>
                         {saving ? 'Guardando...' : 'Guardar cambios'}
                     </button>
-                </div> */}
+                </div>
             </div>
         </div>
     );
