@@ -30,10 +30,16 @@ function TradeProposal({ articleId, articleOwner, onClose, onSuccess }) {
         }
 
         const data = await response.json();
+        // backend devuelve { success, articles }
+        const allArticles = data.articles || [];
+
         // Filtrar solo artículos del usuario actual y disponibles
-        const myArticles = (data.data || []).filter(
-          a => a.owner._id === userId && a.status === 'Disponible'
-        );
+        const myArticles = allArticles.filter(a => {
+          // owner puede estar poblado como objeto {_id, username} o como id string
+          const ownerId = a.owner && (a.owner._id || a.owner);
+          return String(ownerId) === String(userId) && a.status === 'Disponible';
+        });
+
         setUserArticles(myArticles);
       } catch (err) {
         setError(err.message);
@@ -163,20 +169,39 @@ function TradeProposal({ articleId, articleOwner, onClose, onSuccess }) {
                   Usa la pestaña "Describir Artículo" para proponer un trueque sin publicar.
                 </p>
               ) : (
-                <select
-                  id="article"
-                  value={selectedArticleId}
-                  onChange={(e) => setSelectedArticleId(e.target.value)}
-                  disabled={loading}
-                  className="article-select"
-                >
-                  <option value="">-- Selecciona un artículo --</option>
-                  {userArticles.map(article => (
-                    <option key={article._id} value={article._id}>
-                      {article.title}
-                    </option>
-                  ))}
-                </select>
+                <>
+                  <select
+                    id="article"
+                    value={selectedArticleId}
+                    onChange={(e) => setSelectedArticleId(e.target.value)}
+                    disabled={loading}
+                    className="article-select"
+                  >
+                    <option value="">-- Selecciona un artículo --</option>
+                    {userArticles.map(article => (
+                      <option key={article._id} value={article._id}>
+                        {article.title}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Vista previa de la imagen del artículo seleccionado */}
+                  {selectedArticleId && (() => {
+                    const sel = userArticles.find(a => a._id === selectedArticleId);
+                    if (!sel) return null;
+                    const img = (sel.images && sel.images[0]) || '';
+                    return (
+                      <div className="article-preview">
+                        {img ? (
+                          <img src={img} alt={sel.title} />
+                        ) : (
+                          <div className="no-image">Sin imagen</div>
+                        )}
+                        <div className="preview-title">{sel.title}</div>
+                      </div>
+                    );
+                  })()}
+                </>
               )}
             </div>
           )}
