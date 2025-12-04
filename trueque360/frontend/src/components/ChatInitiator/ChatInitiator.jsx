@@ -28,7 +28,7 @@ function ChatInitiator({ articleOwner, articleId, onClose, onSuccess }) {
 
       // 1. Crear la conversación
       const conversationResponse = await fetch(
-        'http://localhost:3000/api/conversations',
+        'https://trueque360.onrender.com/api/conversations',
         {
           method: 'POST',
           headers: {
@@ -51,7 +51,7 @@ function ChatInitiator({ articleOwner, articleId, onClose, onSuccess }) {
 
       // 2. Enviar el mensaje
       const messageResponse = await fetch(
-        'http://localhost:3000/api/messages',
+        'https://trueque360.onrender.com/api/messages',
         {
           method: 'POST',
           headers: {

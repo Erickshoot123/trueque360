@@ -49,7 +49,7 @@ function CreateArticle() {
       }
 
       // --- 3. LLAMAR A LA API (POST CON TOKEN) ---
-      const response = await fetch('http://localhost:3000/api/articles', {
+      const response = await fetch('https://trueque360.onrender.com/api/articles', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

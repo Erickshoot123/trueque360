@@ -8,7 +8,7 @@ import ProductGrid from '../ProductGrid/ProductGrid.jsx';
 // --- ¡CSS QUE FALTABA! ---
 import '../ProductGrid/ProductGrid.css'; 
 
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://trueque360.onrender.com';
 
 // --- COMPONENTE WIDGET DE EJEMPLO (SIN EMOJIS) ---
 const SmallWidget = ({ title, value, onClick, className }) => (

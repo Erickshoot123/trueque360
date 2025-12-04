@@ -23,7 +23,7 @@ function Inventory() {
 
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/articles', {
+        const response = await fetch('https://trueque360.onrender.com/api/articles', {
           headers: {
             'Authorization': `Bearer ${token}`
           }

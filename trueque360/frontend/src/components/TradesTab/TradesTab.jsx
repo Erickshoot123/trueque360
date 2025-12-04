@@ -16,7 +16,7 @@ function TradesTab() {
     const fetchTrades = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/trades', {
+        const response = await fetch('https://trueque360.onrender.com/api/trades', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -42,7 +42,7 @@ function TradesTab() {
   // Actualizar estado del trueque
   const handleUpdateStatus = async (tradeId, status) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/trades/${tradeId}`, {
+      const response = await fetch(`https://trueque360.onrender.com/api/trades/${tradeId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
