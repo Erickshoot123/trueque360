@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './CreateArticle.css'; // Importamos el CSS para el formulario
+import { API_BASE } from '../../api';
 
 function CreateArticle() {
   // Estados para cada campo del formulario
@@ -49,7 +50,7 @@ function CreateArticle() {
       }
 
       // --- 3. LLAMAR A LA API (POST CON TOKEN) ---
-      const response = await fetch('https://trueque360.onrender.com/api/articles', {
+      const response = await fetch(`${API_BASE}/api/articles`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

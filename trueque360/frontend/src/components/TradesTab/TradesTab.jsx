@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './TradesTab.css';
+import { API_BASE } from '../../api';
 
 function TradesTab() {
   const [trades, setTrades] = useState({ received: [], sent: [] });
@@ -16,7 +17,7 @@ function TradesTab() {
     const fetchTrades = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://trueque360.onrender.com/api/trades', {
+        const response = await fetch(`${API_BASE}/api/trades`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -42,7 +43,7 @@ function TradesTab() {
   // Actualizar estado del trueque
   const handleUpdateStatus = async (tradeId, status) => {
     try {
-      const response = await fetch(`https://trueque360.onrender.com/api/trades/${tradeId}`, {
+      const response = await fetch(`${API_BASE}/api/trades/${tradeId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

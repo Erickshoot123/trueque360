@@ -1,5 +1,6 @@
 // Archivo renombrado/convertido a stub para evitar que una versión incompleta rompa el build
 import React from 'react';
+import { API_BASE } from '../../api';
 
 function EditArticle() {
  HEAD
@@ -26,7 +27,7 @@ function EditArticle() {
         try {
             setIsLoading(true);
             // Llamamos al endpoint de la API que ya creaste
-            const response = await fetch(`https://trueque360.onrender.com/api/articles/${id}`);
+            const response = await fetch(`${API_BASE}/api/articles/${id}`);
             const data = await response.json();
 
             if (!response.ok) {

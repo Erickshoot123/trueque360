@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import ChatInitiator from '../ChatInitiator/ChatInitiator';
 import TradeProposal from '../TradeProposal/TradeProposal';
 import './ArticleDetail.css'; // Crearemos este CSS
+import { API_BASE } from '../../api';
 
 function ArticleDetail() {
   // Obtenemos el 'id' del artículo desde la URL (ej: /articulo/12345)
@@ -25,7 +26,7 @@ function ArticleDetail() {
       try {
         setLoading(true);
         // Llamamos al endpoint de la API que ya creaste
-        const response = await fetch(`https://trueque360.onrender.com/api/articles/${id}`);
+        const response = await fetch(`${API_BASE}/api/articles/${id}`);
         const data = await response.json();
 
         if (!response.ok) {
@@ -53,7 +54,7 @@ function ArticleDetail() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/articles/${id}`, {
+      const response = await fetch(`${API_BASE}/api/articles/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -87,7 +88,7 @@ function ArticleDetail() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/conversations/article/${id}`, {
+      const response = await fetch(`${API_BASE}/api/conversations/article/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

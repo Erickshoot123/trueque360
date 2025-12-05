@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE } from '../../api';
 import { Link, useNavigate } from 'react-router-dom';
 import '../Login/login.css'; // Usando el mismo CSS
 
@@ -14,7 +15,7 @@ function Register() {
     setMessage(''); 
 
     try {
-      const response = await fetch('https://trueque360.onrender.com/api/register', { 
+      const response = await fetch(`${API_BASE}/api/register`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

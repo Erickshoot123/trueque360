@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 // Importamos 'Link' y 'useNavigate' para la navegación
 import { Link, useNavigate } from 'react-router-dom'; 
 import './Dashboard.css';
+import { API_BASE } from '../../api';
 
 // Importamos el Grid de Productos y su CSS
 import ProductGrid from '../ProductGrid/ProductGrid.jsx'; 
 // --- ¡CSS QUE FALTABA! ---
 import '../ProductGrid/ProductGrid.css'; 
 
-const API_BASE = 'https://trueque360.onrender.com';
+// API_BASE imported from src/api.js
 
 // --- COMPONENTE WIDGET DE EJEMPLO (SIN EMOJIS) ---
 const SmallWidget = ({ title, value, onClick, className }) => (

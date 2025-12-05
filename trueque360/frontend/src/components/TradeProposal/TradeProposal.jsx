@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './TradeProposal.css';
+import { API_BASE } from '../../api';
 
 function TradeProposal({ articleId, articleOwner, onClose, onSuccess }) {
   const [userArticles, setUserArticles] = useState([]);
@@ -19,7 +20,7 @@ function TradeProposal({ articleId, articleOwner, onClose, onSuccess }) {
     const fetchUserArticles = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://trueque360.onrender.com/api/articles', {
+        const response = await fetch(`${API_BASE}/api/articles`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -88,7 +89,7 @@ function TradeProposal({ articleId, articleOwner, onClose, onSuccess }) {
         body.proposedItemDescription = proposalDescription.trim();
       }
 
-      const response = await fetch('https://trueque360.onrender.com/api/trades', {
+      const response = await fetch(`${API_BASE}/api/trades`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

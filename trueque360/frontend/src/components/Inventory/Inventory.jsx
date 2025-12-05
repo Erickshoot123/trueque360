@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Inventory.css';
+import { API_BASE } from '../../api';
 
 function Inventory() {
   const [articles, setArticles] = useState([]);
@@ -23,7 +24,7 @@ function Inventory() {
 
       try {
         setLoading(true);
-        const response = await fetch('https://trueque360.onrender.com/api/articles', {
+        const response = await fetch(`${API_BASE}/api/articles`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

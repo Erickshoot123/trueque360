@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE } from '../../api';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css'; // Tu CSS compartido
 
@@ -13,7 +14,7 @@ function Login() {
     setMessage('');
 
     try {
-      const response = await fetch('https://trueque360.onrender.com/api/login', { 
+      const response = await fetch(`${API_BASE}/api/login`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import './EditArticle.css';
+import { API_BASE } from '../../api';
 
 function EditArticle() {
   const { id } = useParams();
@@ -32,7 +33,7 @@ function EditArticle() {
       }
 
       try {
-        const response = await fetch(`https://trueque360.onrender.com/api/articles/${id}`, {
+        const response = await fetch(`${API_BASE}/api/articles/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -91,7 +92,7 @@ function EditArticle() {
       }
 
       // Llamar a la API (PUT para actualizar)
-      const response = await fetch(`http://localhost:3000/api/articles/${id}`, {
+      const response = await fetch(`${API_BASE}/api/articles/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

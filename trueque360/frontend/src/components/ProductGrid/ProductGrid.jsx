@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // (No necesitas importar el CSS aquí si ya lo haces en Dashboard.js)
 import './ProductGrid.css'; // <-- ¡HE CORREGIDO ESTO!
+import { API_BASE } from '../../api';
 
 function ProductGrid({ selectedCategory = 'Todos' }) {
   const [articles, setArticles] = useState([]);
@@ -14,7 +15,7 @@ function ProductGrid({ selectedCategory = 'Todos' }) {
     const fetchArticles = async () => {
       try {
         // Llamamos a la API del backend (ruta pública)
-        const response = await fetch('https://trueque360.onrender.com/api/articles');
+        const response = await fetch(`${API_BASE}/api/articles`);
         if (!response.ok) {
           throw new Error('Error al cargar los artículos');
         }

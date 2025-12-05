@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link, useParams} from 'react-router-dom';
 import './ArticleDetail.css'; // Importamos el CSS
+import { API_BASE } from '../../api';
 
 function EditArticle() {
     const { id } = useParams(); 
@@ -26,7 +27,7 @@ function EditArticle() {
         try {
             setIsLoading(true);
             // Llamamos al endpoint de la API que ya creaste
-            const response = await fetch(`http://localhost:3000/api/articles/${id}`);
+            const response = await fetch(`${API_BASE}/api/articles/${id}`);
             const data = await response.json();
 
             if (!response.ok) {

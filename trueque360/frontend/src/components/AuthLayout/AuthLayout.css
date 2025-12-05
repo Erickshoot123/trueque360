@@ -3,7 +3,8 @@ body, html, #root {
   padding: 0;
   height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden; 
+  /* Allow page to scroll on small devices so content is not clipped */
+  overflow: visible;
 }
 
 .auth-layout-container {
@@ -90,7 +91,15 @@ body, html, #root {
   padding: 2rem;
   box-sizing: border-box;
   position: relative;
-  z-index: 10; 
+  z-index: 10;
+  /* Ensure right column can scroll independently if content overflows (mobile) */
+  overflow-y: auto;
+}
+
+/* Limit width of the child content so forms don't stretch too wide and center them */
+.auth-layout-right > * {
+  width: 100%;
+  max-width: 460px;
 }
 
 /* Responsive */
@@ -107,9 +116,10 @@ body, html, #root {
   }
   .auth-layout-left p {
     font-size: 0.9rem;
+    max-width: 100%;
   }
   .auth-layout-right {
-    min-height: 75vh; 
+    min-height: auto;
     padding: 1rem;
   }
 }

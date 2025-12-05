@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import './ChatPage.css'; // Crearemos este archivo para los estilos
+import { API_BASE } from '../../api';
 
 function ChatPage() {
   // --- Estados del Componente ---
@@ -27,7 +28,7 @@ function ChatPage() {
 
     // Conectarse al servidor de Socket.IO (http://localhost:3000)
     // y enviar el token para autenticación
-    const newSocket = io('http://localhost:3000', {
+    const newSocket = io(API_BASE, {
       auth: {
         token: token
       }
@@ -75,7 +76,7 @@ function ChatPage() {
 
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/users', {
+        const response = await fetch(`${API_BASE}/api/users`, {
           headers: {
             // Enviamos el token en la cabecera HTTP
             'Authorization': `Bearer ${token}`
@@ -111,7 +112,7 @@ function ChatPage() {
 
     try {
       // Pedimos el historial de mensajes para este usuario
-      const response = await fetch(`http://localhost:3000/api/messages/${user._id}`, {
+      const response = await fetch(`${API_BASE}/api/messages/${user._id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

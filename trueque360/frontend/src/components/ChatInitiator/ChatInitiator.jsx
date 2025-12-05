@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ChatInitiator.css';
+import { API_BASE } from '../../api';
 
 function ChatInitiator({ articleOwner, articleId, onClose, onSuccess }) {
   const [message, setMessage] = useState('¿Sigue disponible?');
@@ -28,7 +29,7 @@ function ChatInitiator({ articleOwner, articleId, onClose, onSuccess }) {
 
       // 1. Crear la conversación
       const conversationResponse = await fetch(
-        'https://trueque360.onrender.com/api/conversations',
+        `${API_BASE}/api/conversations`,
         {
           method: 'POST',
           headers: {
@@ -51,7 +52,7 @@ function ChatInitiator({ articleOwner, articleId, onClose, onSuccess }) {
 
       // 2. Enviar el mensaje
       const messageResponse = await fetch(
-        'https://trueque360.onrender.com/api/messages',
+        `${API_BASE}/api/messages`,
         {
           method: 'POST',
           headers: {
